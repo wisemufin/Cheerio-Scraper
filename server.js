@@ -56,3 +56,7 @@ app.get("/scrape", function(req, res) {
     res.send("Scrape Complete");
   });
 });
+
+app.listen(PORT, function() {
+  console.log("App running on port " + PORT + "!");
+});
