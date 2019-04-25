@@ -19,6 +19,13 @@ app.use(express.static("public"));
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/cheerioScraper";
 mongoose.connect(MONGODB_URI);
 
+// Main route
+app.get("/", function(req, res) {
+  res.send("Hello World");
+});
+
+
+
 // A GET route for scraping hackerNews website
 app.get("/scrape", function(req, res) {
   // Grab the body of the html
