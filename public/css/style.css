@@ -1,9 +1,9 @@
 body {
-   background-color: #F2F6D0
+   background-color: white;
 }
 
 #wrapper {
-  width: 960px;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
   padding-top: 5%;
@@ -20,6 +20,14 @@ body {
 
 .headline:hover {
   cursor: pointer;
+}
+
+.headline {
+  font-size: 24px;
+}
+
+.summary {
+  font-size: 16px;
 }
 
 #notes {

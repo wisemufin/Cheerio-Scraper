@@ -17,13 +17,23 @@ app.use(express.json());
 // Public static folder
 app.use(express.static("public"));
 
+// Set Handlebars.
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
 // Connect to Mongo DB *CHANGE NAME IN LOCAL IF NECESSARY*
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/cheerioScraper";
 mongoose.connect(MONGODB_URI);
 
 // Main route
-app.get("/", function(req, res) {
-  res.send("Hello World");
+app.get("/", function(req,res) {
+  res.render("index", {
+    title: "Home",
+    customcss: "<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/style.css\"></link>",
+    customjs: "<script type=\"text/javascript\" src=\"/app.js\"></script>"
+  });
 });
 
 
@@ -34,7 +44,7 @@ app.get("/scrape", function(req, res) {
   axios.get("https://www.nytimes.com/section/technology").then(function(response) {
     // Load the body into cheerio
     var $ = cheerio.load(response.data);
-    var url = "https://www.nytimes.com/section/technology";
+    var url = "https://www.nytimes.com";
 
     // Grab each article with a class of css-ye6x8s
     $("div.css-4jyr1y").each(function(i, element) {
