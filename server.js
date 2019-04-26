@@ -7,7 +7,7 @@ var cheerio = require("cheerio");
 
 var db = require("./models");
 
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
 // Initialize Express
 var app = express();
@@ -36,14 +36,16 @@ app.get("/scrape", function(req, res) {
     var $ = cheerio.load(response.data);
 
     // Grab each article with a class of css-ye6x8s
-    $(".css-ye6x8s").each(function(i, element) {
+    $("div.css-4jyr1y").each(function(i, element) {
       // Empty object for the results to be stored in
       var result = {};
 
       // Grab all articles with title class
-      result.headline = $(element).children(".css-1dq8tca e1xfvim30").text();
-      result.summary = $(element).children(".css-1echdzn e1xfvim31").text();
+      result.headline = $(element).children("a").children("h2").text();
+      result.summary = $(element).children("a").children("p").text();
       result.link = $(element).children("a").attr("href");
+
+      console.log(result);
 
       db.Article.create(result)
         .then(function(dbArticle) {
